@@ -1,0 +1,43 @@
+{
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "plugin:import/errors",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "env": {
+    "es6": true,
+    "jest": true,
+    "browser": true
+  },
+  "rules": {
+    "import/order": "error",
+    "no-duplicate-imports": "error",
+    "react/jsx-indent": [
+      1,
+      2
+    ],
+    "no-console": "error",
+    "no-unused-vars": "error",
+    "prettier/prettier": "warn",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx"]
+      }
+    }
+  }
+}
