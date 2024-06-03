@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react'
 import SensorChart from './components/SensorChart'
 import Navbar from './components/Navbar'
+import FlightStageTab from './components/FlightStageTab'
+import TimeTab from './components/TimeTab'
+import EnvironmentSensorTab from './components/EnvironmentSensorTab'
+import TelemetrySensorTab from './components/TelemetrySensorTab'
 
 function App() {
 
@@ -24,6 +28,18 @@ function App() {
       <div className="grid grid-cols-3 grid-rows-3 gap-2 border-black border-dashed border-2">
         <div className="col-start-1 col-span-2 row-span-3  h-[300px]">
           <div className="bg-gray-300">Image placeholder</div>
+        </div>
+        <div className="col-start-3 col-span-1 row-span-1 flex justify-center">
+          <TimeTab />
+        </div>
+        <div className="col-start-3 col-span-1 row-span-1  flex justify-center">
+          <FlightStageTab />
+        </div>
+        <div className="col-start-3 col-span-1 row-span-1 flex justify-center">
+          <EnvironmentSensorTab />
+        </div>
+        <div className="col-start-3 col-span-1 row-span-1 flex justify-center">
+          <TelemetrySensorTab />
         </div>
       </div>
       <SensorChart data={sensorData}/>
