@@ -46,7 +46,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className='flex gap-4 px-4 justify-end text-[3rem] col-start-3'>
+      <div className='flex gap-4 px-4 justify-end text-[3rem]'>
         <button onClick={decrement}>-</button>
         <button onClick={increment}>+</button>
       </div>
