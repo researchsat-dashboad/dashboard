@@ -13,7 +13,7 @@ app.use(cors());
 // Use mission_routes.js
 app.use('/mission', missionRouter);
 
-app.listen(4001, () => {
+app.listen(process.env.PORT, () => {
   // eslint-disable-next-line
-  console.log('Listening on port ' + 4001);
+  console.log('Listening on port ' + process.env.PORT);
 });
