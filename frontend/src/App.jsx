@@ -46,11 +46,11 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className='grid grid-cols-3 grid-rows-3 gap-2 p-2 lg:p-8 bg-gray-300 '>
       <div className='flex gap-4 px-4 justify-end text-[3rem]'>
         <button onClick={decrement}>-</button>
         <button onClick={increment}>+</button>
       </div>
+      <div className='grid grid-cols-3 grid-rows-3 gap-2 p-2 lg:p-8 bg-gray-300 '>
         <div className='col-start-1 col-span-2 row-span-3  h-[300px]'>
           <div className='bg-gray-300'>Image placeholder</div>
         </div>
