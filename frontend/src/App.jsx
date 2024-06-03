@@ -11,26 +11,46 @@ function App() {
   const [flightStage, setFlightStage] = useState(null);
   const [envSensor, setEnvSensor] = useState(null);
   const [teleSensor, setTeleSensor] = useState(null);
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [counter]);
 
   async function getData() {
     const response = await fetch('http://localhost:4001/mission');
     const data = await response.json();
-    console.log(data);
-    const sensorData = data.sensor_data[0];
+    const sensorData = data.sensor_data[counter];
     setEnvSensor(sensorData.environment);
     setSpectData(sensorData.spectroscopy);
     setTeleSensor(sensorData.telemetry);
     setFlightStage(sensorData.telemetry['Signal']);
   }
 
+  function decrement() {
+    if (counter > 0) {
+      setCounter((prevValue) => prevValue - 1);
+    } else {
+      return;
+    }
+  }
+
+  function increment() {
+    if (counter < 3) {
+      setCounter((prevValue) => prevValue + 1);
+    } else {
+      return;
+    }
+  }
+
   return (
     <>
       <Navbar />
       <div className='grid grid-cols-3 grid-rows-3 gap-2 p-2 lg:p-8 bg-gray-300 '>
+      <div className='flex gap-4 px-4 justify-end text-[3rem]'>
+        <button onClick={decrement}>-</button>
+        <button onClick={increment}>+</button>
+      </div>
         <div className='col-start-1 col-span-2 row-span-3  h-[300px]'>
           <div className='bg-gray-300'>Image placeholder</div>
         </div>
@@ -48,7 +68,7 @@ function App() {
         </div>
       </div>
       <SensorChart data={spectData} />
-      <h1 className='p-4 text-pink-500'>Vite + React + Tailwindcss</h1>
+      <h1 className='p-4 text-pink-500'>Vite + React + Tailwindcss</h1>;
     </>
   );
 }
