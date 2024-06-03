@@ -15,6 +15,7 @@ function App() {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [counter]);
 
   async function getData() {
@@ -68,7 +69,6 @@ function App() {
         </div>
       </div>
       <SensorChart data={spectData} />
-      <h1 className='p-4 text-pink-500'>Vite + React + Tailwindcss</h1>;
     </>
   );
 }
