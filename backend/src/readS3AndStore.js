@@ -71,6 +71,7 @@ const readCSVFromS3 = () => {
             isNaN(acy) ||
             isNaN(acz)
           ) {
+            // eslint-disable-next-line
             console.error('Invalid numerical value encountered in row:', row);
             return;
           }
@@ -97,15 +98,19 @@ const readCSVFromS3 = () => {
 
           try {
             await sensorData.save();
+            // eslint-disable-next-line
             console.log(`Successfully processed row in file: ${file.Key}`);
           } catch (saveError) {
+            // eslint-disable-next-line
             console.error('Error saving data to MongoDB', saveError);
           }
         })
         .on('end', () => {
+          // eslint-disable-next-line
           console.log(`Successfully processed file: ${file.Key}`);
         })
         .on('error', (err) => {
+          // eslint-disable-next-line
           console.log('Error processing file', err);
         });
     });
