@@ -20,6 +20,36 @@ router.get('/data', async (request, response) => {
   }
 });
 
+// Get last 5 minutes data for dashboard route
+router.get('/data/overview', async (request, response) => {
+  try {
+    // Retrieve all data points in descending order
+    const sensorData = await SensorData.find({}, [
+      'temperature',
+      'pressure',
+      'humidity',
+      'spectV',
+      'spectB',
+      'spectG',
+      'spectY',
+      'spectD',
+      'spectR',
+      'acx',
+      'acy',
+      'acz',
+      'signal',
+      'dateTime'
+    ])
+      .sort({ dateTime: -1 })
+      .limit(360);
+    response.json(sensorData);
+  } catch (err) {
+    // eslint-disable-next-line
+    console.error('Error fetching data', err);
+    response.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 // Get all temperature data
 router.get('/data/temp', async (request, response) => {
   try {
@@ -46,11 +76,32 @@ router.get('/data/humidity', async (request, response) => {
   }
 });
 
+// Get all pressure data
+router.get('/data/pressure', async (request, response) => {
+  try {
+    // Retrieve temperature data points in ascending order
+    const sensorData = await SensorData.find({}, ['pressure', 'dateTime']).sort({ dateTime: 1 });
+    response.json(sensorData);
+  } catch (err) {
+    // eslint-disable-next-line
+    console.error('Error fetching data', err);
+    response.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 // Get all spect data
 router.get('/data/spect', async (request, response) => {
   try {
     // Retrieve temperature data points in ascending order
-    const sensorData = await SensorData.find({}, ['spectV', 'spectB', 'spectG', 'spectY', 'spectD', 'spectR', 'dateTime']).sort({ dateTime: 1 });
+    const sensorData = await SensorData.find({}, [
+      'spectV',
+      'spectB',
+      'spectG',
+      'spectY',
+      'spectD',
+      'spectR',
+      'dateTime'
+    ]).sort({ dateTime: 1 });
     response.json(sensorData);
   } catch (err) {
     // eslint-disable-next-line
