@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import SpectChart from './SpectChart';
 
 export default function Navbar({ isLive, setIsLive, spectData }) {
   const [time, setTime] = useState('Loading...');
@@ -10,7 +9,9 @@ export default function Navbar({ isLive, setIsLive, spectData }) {
 
   useEffect(() => {
     if (spectData.length > 0) {
-      const latestDataPoint = new Date(spectData[spectData.length - 1].dateTime).toUTCString().split('G')[0];
+      const latestDataPoint = new Date(spectData[spectData.length - 1].dateTime)
+        .toUTCString()
+        .split('G')[0];
       setTime(latestDataPoint);
     }
   }, [spectData]);

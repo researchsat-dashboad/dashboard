@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   LineChart,
   Line,
@@ -6,12 +5,10 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   Label,
   ResponsiveContainer
 } from 'recharts';
 import formatDateTick from '../services/formatDateTick';
-import { format, addHours } from 'date-fns';
 import Loader from '../services/Loader';
 
 export default function TemperatureChart({ tempData, handleChartClick }) {

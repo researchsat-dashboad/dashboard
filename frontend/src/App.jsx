@@ -16,7 +16,7 @@ function App() {
   const [pressureData, setPressureData] = useState([]);
   const [isFullScreen, setIsFullScreen] = useState(null);
   const [fullScreenChart, setFullScreenChart] = useState(null);
-  const [isLive, setIsLive] = useState(false)
+  const [isLive, setIsLive] = useState(false);
 
   useEffect(() => {
     getData();
@@ -35,7 +35,7 @@ function App() {
     const humidityArr = data.map((entry) => ({
       dateTime: entry.dateTime,
       humidity: entry.humidity
-    })); 
+    }));
 
     const pressureArr = data.map((entry) => ({
       dateTime: entry.dateTime,
@@ -60,7 +60,7 @@ function App() {
 
   // Call individual API endpoints for full data set for sensor type, passed in as sensor 'name'
   async function getFullSensorData(name) {
-    console.log('Getting data triggered');
+    // console.log('Getting data triggered');
     const response = await fetch(`http://localhost:4001/mission/data/${name}`);
     if (!response.ok) {
       throw new Error(`Error fetching data: ${response.statusText}`);
@@ -91,7 +91,7 @@ function App() {
 
   // Expand chart to full screen onClick function
   async function handleChartClick(name) {
-    console.log('Chart clicked, expanding');
+    // console.log('Chart clicked, expanding');
     try {
       const fetchedData = await getFullSensorData(name);
 
@@ -115,7 +115,6 @@ function App() {
       alert('Error fetching data; please try again');
       return;
     }
-
   }
 
   function exitFullScreen() {
@@ -125,7 +124,7 @@ function App() {
 
   return (
     <>
-      <Navbar isLive={isLive} setIsLive={setIsLive} spectData={spectData}/>
+      <Navbar isLive={isLive} setIsLive={setIsLive} spectData={spectData} />
       {isFullScreen && (
         <div className='flex justify-center'>
           <div className='fixed top-[5vh] p-16 w-[90vw] h-[90vh] bg-[#0c1625] z-50'>

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   LineChart,
   Line,
@@ -6,7 +5,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   Label,
   ResponsiveContainer
 } from 'recharts';
@@ -45,10 +43,10 @@ export default function HumidityChartFull({ humidityData }) {
   const CustomTooltip = ({ active, payload, label }) => {
     let time;
     if (label) {
-      const utcDate = new Date(label)
-      const timeString = String(utcDate)
-      const timeOnly = timeString.split(" ")
-      time = timeOnly[4]
+      const utcDate = new Date(label);
+      const timeString = String(utcDate);
+      const timeOnly = timeString.split(' ');
+      time = timeOnly[4];
     }
 
     if (active && payload && payload.length) {
@@ -89,21 +87,12 @@ export default function HumidityChartFull({ humidityData }) {
             tick={{ dy: 20, fill: 'gray' }}
             interval={Math.ceil(data.length / 100)}
           />
-          <YAxis
-            dataKey='humidity'
-            tick={{ fill: 'gray', dy: -15 }}
-            angle={-45}
-          >
+          <YAxis dataKey='humidity' tick={{ fill: 'gray', dy: -15 }} angle={-45}>
             <Label value={'Humidity %'} angle={-90} fill='white' dx={-30} />
           </YAxis>
           <Tooltip content={CustomTooltip} />
           {/* <Legend /> */}
-          <Line
-            type='monotone'
-            dataKey='humidity'
-            stroke='#fff'
-            dot={false}
-          />
+          <Line type='monotone' dataKey='humidity' stroke='#fff' dot={false} />
         </LineChart>
       </ResponsiveContainer>
     </>

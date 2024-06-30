@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   LineChart,
   Line,
@@ -6,7 +5,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   Label,
   ResponsiveContainer
 } from 'recharts';
@@ -46,10 +44,10 @@ export default function PressureChartFull({ pressureData }) {
   const CustomTooltip = ({ active, payload, label }) => {
     let time;
     if (label) {
-      const utcDate = new Date(label)
-      const timeString = String(utcDate)
-      const timeOnly = timeString.split(" ")
-      time = timeOnly[4]
+      const utcDate = new Date(label);
+      const timeString = String(utcDate);
+      const timeOnly = timeString.split(' ');
+      time = timeOnly[4];
     }
 
     if (active && payload && payload.length) {
@@ -100,12 +98,7 @@ export default function PressureChartFull({ pressureData }) {
           </YAxis>
           <Tooltip content={CustomTooltip} />
           {/* <Legend /> */}
-          <Line
-            type='monotone'
-            dataKey='pressure'
-            stroke='#fff'
-            dot={false}
-          />
+          <Line type='monotone' dataKey='pressure' stroke='#fff' dot={false} />
         </LineChart>
       </ResponsiveContainer>
     </>
