@@ -3,9 +3,8 @@ import { Navbar, NavbarBrand, NavbarContent, Image } from '@nextui-org/react';
 export default function Header() {
   return (
     <Navbar
-      isBlurred
-      maxWidth='2xl'
-      className='max-w-full py-4 min-h-[120px] md:min-h-[80px]'
+      maxWidth='full'
+      className='max-w-full py-4 min-h-[120px] md:min-h-[80px] bg-rsBlue '
       height='auto'
       classNames={{
         wrapper: 'align-center'

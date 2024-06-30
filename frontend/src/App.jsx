@@ -125,20 +125,7 @@ function App() {
 
   return (
     <BaseLayout>
-      {isFullScreen && (
-        <div className='flex justify-center'>
-          <div className='fixed top-[5vh] p-16 w-[90vw] h-[90vh] bg-[#0c1625] z-50'>
-            {fullScreenChart}
-            <div
-              className='absolute top-0 right-0 p-4 m-4 cursor-pointer text-white'
-              onClick={exitFullScreen}
-            >
-              <img src='close-icon.svg' className='h-[3rem]' />
-            </div>
-          </div>
-        </div>
-      )}
-      <div className='grid grid-cols-3 grid-rows-[30vh_30vh_30vh] gap-2 p-2 lg:p-8 bg-[#13253f] border-2 border-black'>
+      <div className='grid grid-cols-3 grid-rows-[30vh_30vh_30vh] gap-2  w-full'>
         <div className='h-[300px]'>
           <div className='bg-gray-300 text-[2rem]'>Image placeholder</div>
         </div>
