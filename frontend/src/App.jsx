@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import BaseLayout from './layout/BaseLayout';
 import Navbar from './components/Navbar';
 import TemperatureChart from './components/TemperatureChart';
 import SpectChart from './components/SpectChart';
@@ -123,8 +124,7 @@ function App() {
   }
 
   return (
-    <>
-      <Navbar isLive={isLive} setIsLive={setIsLive} spectData={spectData} />
+    <BaseLayout>
       {isFullScreen && (
         <div className='flex justify-center'>
           <div className='fixed top-[5vh] p-16 w-[90vw] h-[90vh] bg-[#0c1625] z-50'>
@@ -159,7 +159,7 @@ function App() {
           <SpectChart spectData={spectData} handleChartClick={handleChartClick} />
         </div>
       </div>
-    </>
+    </BaseLayout>
   );
 }
 
