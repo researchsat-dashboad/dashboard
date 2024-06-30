@@ -45,7 +45,7 @@ export default function HumidityChart({ humidityData, handleChartClick }) {
   };
 
   return (
-    <ChartContainer onZoom={() => handleChartClick('humidity')} title='Humidity/Time Graph'>
+    <ChartContainer onZoom={handleChartClick('humidity')} title='Humidity/Time Graph'>
       {humidityData.length == 0 ? (
         <Loader />
       ) : (

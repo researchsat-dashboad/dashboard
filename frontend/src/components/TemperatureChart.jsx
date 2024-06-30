@@ -45,7 +45,7 @@ export default function TemperatureChart({ tempData, handleChartClick }) {
   };
 
   return (
-    <ChartContainer title='Temperature/Time Graph' onZoom={() => handleChartClick('temperature')}>
+    <ChartContainer title='Temperature/Time Graph' onZoom={handleChartClick('temperature')}>
       {tempData.length == 0 ? (
         <Loader />
       ) : (

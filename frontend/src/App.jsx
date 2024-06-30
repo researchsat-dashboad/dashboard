@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useDisclosure, Modal, ModalBody, ModalContent } from '@nextui-org/react';
 import BaseLayout from './layout/BaseLayout';
-import Navbar from './components/Navbar';
 import TemperatureChart from './components/TemperatureChart';
 import SpectChart from './components/SpectChart';
 import HumidityChart from './components/HumidityChart';
@@ -15,13 +15,24 @@ function App() {
   const [tempData, setTempData] = useState([]);
   const [humidityData, setHumidityData] = useState([]);
   const [pressureData, setPressureData] = useState([]);
-  const [isFullScreen, setIsFullScreen] = useState(null);
-  const [fullScreenChart, setFullScreenChart] = useState(null);
+  const [activeData, setActiveData] = useState([]);
+  const [currentActiveChart, setCurrentActiveChart] = useState(null);
   const [isLive, setIsLive] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure({
+    onClose: () => {
+      setCurrentActiveChart(null);
+    }
+  });
 
   useEffect(() => {
     getData();
   }, [isLive]);
+
+  useEffect(() => {
+    if (currentActiveChart) {
+      getFullSensorData(currentActiveChart);
+    }
+  }, [currentActiveChart]);
 
   // Single API call for all data points, query limited to 50
   async function getData() {
@@ -87,41 +98,31 @@ function App() {
       }));
     }
 
-    return dataArr;
+    setActiveData(dataArr);
   }
 
   // Expand chart to full screen onClick function
-  async function handleChartClick(name) {
-    // console.log('Chart clicked, expanding');
-    try {
-      const fetchedData = await getFullSensorData(name);
+  function renderActiveChart() {
+    switch (currentActiveChart) {
+      case 'pressure':
+        return <PressureChartFull pressureData={activeData} />;
 
-      switch (name) {
-        case 'pressure':
-          setFullScreenChart(() => <PressureChartFull pressureData={fetchedData} />);
-          break;
-        case 'humidity':
-          setFullScreenChart(() => <HumidityChartFull humidityData={fetchedData} />);
-          break;
-        case 'temperature':
-          setFullScreenChart(() => <TemperatureChartFull temperatureData={fetchedData} />);
-          break;
-        case 'spect':
-          setFullScreenChart(() => <SpectChartFull spectData={fetchedData} />);
-          break;
-      }
+      case 'humidity':
+        return <HumidityChartFull humidityData={activeData} />;
 
-      setIsFullScreen(true);
-    } catch (err) {
-      alert('Error fetching data; please try again');
-      return;
+      case 'temperature':
+        return <TemperatureChartFull temperatureData={activeData} />;
+
+      case 'spect':
+        return <SpectChartFull spectData={activeData} />;
     }
   }
 
-  function exitFullScreen() {
-    setIsFullScreen(false);
-    setFullScreenChart(null);
-  }
+  const onSelectActiveChart = (chartName) => () => {
+    setCurrentActiveChart(chartName);
+
+    onOpen();
+  };
 
   return (
     <BaseLayout>
@@ -133,19 +134,28 @@ function App() {
           <PressureChart
             pressureData={pressureData}
             dataPoints={20}
-            handleChartClick={handleChartClick}
+            handleChartClick={onSelectActiveChart}
           />
         </div>
         <div className='col-start-3 col-span-1 row-span-1 flex flex-col text-center'>
-          <HumidityChart humidityData={humidityData} handleChartClick={handleChartClick} />
+          <HumidityChart humidityData={humidityData} handleChartClick={onSelectActiveChart} />
         </div>
         <div className='col-start-3 col-span-1 row-span-1 flex flex-col text-center'>
-          <TemperatureChart tempData={tempData} handleChartClick={handleChartClick} />
+          <TemperatureChart tempData={tempData} handleChartClick={onSelectActiveChart} />
         </div>
         <div className='col-start-1 col-span-2 row-span-2 row-start-3 flex flex-col text-center'>
-          <SpectChart spectData={spectData} handleChartClick={handleChartClick} />
+          <SpectChart spectData={spectData} handleChartClick={onSelectActiveChart} />
         </div>
       </div>
+      <Modal size='full' isOpen={isOpen} onClose={onClose}>
+        <ModalContent>
+          {() => (
+            <>
+              <ModalBody>{renderActiveChart()}</ModalBody>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </BaseLayout>
   );
 }

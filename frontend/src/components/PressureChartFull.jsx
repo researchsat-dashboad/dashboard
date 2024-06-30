@@ -71,7 +71,7 @@ export default function PressureChartFull({ pressureData }) {
   };
 
   return (
-    <ChartContainer title="Pressure/Time Graph">
+    <ChartContainer title='Pressure/Time Graph'>
       <ResponsiveContainer width='100%' height='95%'>
         <LineChart
           width={730}

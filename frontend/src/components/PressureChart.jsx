@@ -53,7 +53,7 @@ export default function PressureChart({ pressureData, dataPoints, handleChartCli
   };
 
   return (
-    <ChartContainer title='Pressure/Time Graph' onZoom={() => handleChartClick('pressure')}>
+    <ChartContainer title='Pressure/Time Graph' onZoom={handleChartClick('pressure')}>
       {pressureData.length == 0 ? (
         <Loader />
       ) : (

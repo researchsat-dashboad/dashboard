@@ -50,7 +50,7 @@ export default function SpectChart({ spectData, handleChartClick }) {
   };
 
   return (
-    <ChartContainer title='Spectral Graph' onZoom={() => handleChartClick('spect')}>
+    <ChartContainer title='Spectral Graph' onZoom={handleChartClick('spect')}>
       {spectData.length == 0 ? (
         <Loader />
       ) : (
