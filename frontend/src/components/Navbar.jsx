@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Button } from '@nextui-org/react';
 
 export default function Navbar({ isLive, setIsLive, spectData }) {
   const [time, setTime] = useState('Loading...');
@@ -28,23 +29,15 @@ export default function Navbar({ isLive, setIsLive, spectData }) {
         </a>
 
         {isLive ? (
-          <button
-            className='text-white lg:text-[1.5rem] h-[25px] lg:h-[50px] w-[160px] right-[30px] top-[10px] lg:top-[25px] fixed bg-gray-600 hover:bg-gray-500 transition-all duration-300 rounded-lg px-4 flex items-center justify-center'
-            onClick={toggleLive}
-          >
+          <Button onClick={toggleLive}>
             <span className='relative flex h-8 w-8 mr-4 justify-center align-middle place-items-center'>
               <span className='animate-ping absolute h-full w-full rounded-full bg-red-400 opacity-75'></span>
               <span className='relative inline-flex rounded-full h-4 w-4 bg-red-500'></span>
             </span>
             Live
-          </button>
+          </Button>
         ) : (
-          <button
-            className='text-white lg:text-[1.5rem] w-[160px] h-[25px] lg:h-[50px] right-[30px] top-[10px] lg:top-[25px] fixed bg-gray-600 hover:bg-gray-500 transition-all duration-300 rounded-lg px-4'
-            onClick={toggleLive}
-          >
-            Watch Live
-          </button>
+          <Button onClick={toggleLive}>Watch Live</Button>
         )}
       </div>
       <div className='flex justify-end px-4 pb-2'>
