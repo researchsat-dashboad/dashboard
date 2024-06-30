@@ -9,6 +9,7 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import formatDateTick from '../services/formatDateTick';
+import ChartContainer from './ChartContainer';
 
 const calculateMovingAverage = (data, windowSize) => {
   const movingAverageData = [];
@@ -69,10 +70,7 @@ export default function TemperatureChartFull({ temperatureData }) {
   };
 
   return (
-    <>
-      <div className='text-center'>
-        <h1 className='text-[2rem] text-white'>Temperature/Time Graph</h1>
-      </div>
+    <ChartContainer title='Temperature/Time Graph'>
       <ResponsiveContainer width='100%' height='95%'>
         <LineChart
           width={730}
@@ -95,6 +93,6 @@ export default function TemperatureChartFull({ temperatureData }) {
           <Line type='monotone' dataKey='temperature' stroke='#fff' dot={false} />
         </LineChart>
       </ResponsiveContainer>
-    </>
+    </ChartContainer>
   );
 }

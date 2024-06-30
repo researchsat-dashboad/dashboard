@@ -10,6 +10,7 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import formatDateTick from '../services/formatDateTick';
+import ChartContainer from './ChartContainer';
 
 const calculateMovingAverage = (data, windowSize) => {
   const movingAverageData = [];
@@ -100,10 +101,7 @@ export default function SpectChartFull({ spectData }) {
   };
 
   return (
-    <>
-      <div className='text-center'>
-        <h1 className='text-[2rem] text-white'>Spectral/Time Graph</h1>
-      </div>
+    <ChartContainer title='Spectral/Time Graph'>
       <ResponsiveContainer width='100%' height='95%'>
         <LineChart
           width={730}
@@ -159,6 +157,6 @@ export default function SpectChartFull({ spectData }) {
           <Line type='monotone' dataKey='spectR' name='Red (650nm)' stroke='#FF0000' dot={false} />
         </LineChart>
       </ResponsiveContainer>
-    </>
+    </ChartContainer>
   );
 }

@@ -10,6 +10,7 @@ import {
 } from 'recharts';
 import formatDateTick from '../services/formatDateTick';
 import Loader from '../services/Loader';
+import ChartContainer from './ChartContainer';
 
 export default function SpectChart({ spectData, handleChartClick }) {
   const data = spectData.slice(-50);
@@ -49,15 +50,7 @@ export default function SpectChart({ spectData, handleChartClick }) {
   };
 
   return (
-    <>
-      <div className='relative'>
-        <h3 className='text-white text-[1.5rem] my-2'>Spectral Graph</h3>
-        <img
-          src='expand-icon.svg'
-          className='h-[25px] px-2 cursor-pointer absolute right-[20px] top-[15px]'
-          onClick={() => handleChartClick('spect')}
-        />
-      </div>
+    <ChartContainer title='Spectral Graph' onZoom={() => handleChartClick('spect')}>
       {spectData.length == 0 ? (
         <Loader />
       ) : (
@@ -66,7 +59,7 @@ export default function SpectChart({ spectData, handleChartClick }) {
             width={730}
             height={250}
             data={data}
-            margin={{ top: 20, right: 30, left: 20, bottom: 15 }}
+            margin={{ top: 20, right: 30, bottom: 15 }}
           >
             <CartesianGrid strokeDasharray='3 3' stroke='#5d5e5e' />
             <XAxis
@@ -127,6 +120,6 @@ export default function SpectChart({ spectData, handleChartClick }) {
           </LineChart>
         </ResponsiveContainer>
       )}
-    </>
+    </ChartContainer>
   );
 }

@@ -10,6 +10,7 @@ import {
 } from 'recharts';
 import formatDateTick from '../services/formatDateTick';
 import Loader from '../services/Loader';
+import ChartContainer from './ChartContainer';
 
 export default function TemperatureChart({ tempData, handleChartClick }) {
   const data = tempData.slice(-20);
@@ -44,15 +45,7 @@ export default function TemperatureChart({ tempData, handleChartClick }) {
   };
 
   return (
-    <>
-      <div className='relative'>
-        <h3 className='text-white text-[1.5rem] my-2'>Temperature/Time Graph</h3>
-        <img
-          src='expand-icon.svg'
-          className='h-[25px] px-2 cursor-pointer absolute right-[10px] top-[15px]'
-          onClick={() => handleChartClick('temperature')}
-        />
-      </div>
+    <ChartContainer title='Temperature/Time Graph' onZoom={() => handleChartClick('temperature')}>
       {tempData.length == 0 ? (
         <Loader />
       ) : (
@@ -79,6 +72,6 @@ export default function TemperatureChart({ tempData, handleChartClick }) {
           </LineChart>
         </ResponsiveContainer>
       )}
-    </>
+    </ChartContainer>
   );
 }
