@@ -77,7 +77,7 @@ export default function PressureChart({ pressureData, dataPoints, handleChartCli
               angle={-45}
               domain={[minPressure, 'auto']}
             >
-              <Label value={'Pressure Pa'} angle={-90} fill='white' dx={-30} />
+              <Label value={'Pressure (Pa)'} angle={-90} fill='white' dx={-30} />
             </YAxis>
             <Tooltip content={CustomTooltip} />
             {/* <Legend /> */}

@@ -16,8 +16,8 @@ function App() {
   const [humidityData, setHumidityData] = useState([]);
   const [pressureData, setPressureData] = useState([]);
   const [activeData, setActiveData] = useState([]);
-  const [currentActiveChart, setCurrentActiveChart] = useState(null);
   const [isLive, setIsLive] = useState(false);
+  const [currentActiveChart, setCurrentActiveChart] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure({
     onClose: () => {
       setCurrentActiveChart(null);
@@ -37,6 +37,7 @@ function App() {
   // Single API call for all data points, query limited to 50
   async function getData() {
     const response = await fetch('http://localhost:4001/mission/data?limit=50');
+
     const data = await response.json();
 
     const temperatureArr = data.map((entry) => ({
@@ -118,14 +119,20 @@ function App() {
     }
   }
 
-  const onSelectActiveChart = (chartName) => () => {
+  const onSelectActiveChart = (chartName) => async () => {
     setCurrentActiveChart(chartName);
+
+    await getFullSensorData(chartName);
 
     onOpen();
   };
 
+  const toggleLive = () => {
+    setIsLive((c) => !c);
+  };
+
   return (
-    <BaseLayout>
+    <BaseLayout headerProps={{ isLive, toggleLive, spectData }}>
       <div className='grid grid-cols-3 grid-rows-[30vh_30vh_30vh] gap-2  w-full'>
         <div className='h-[300px]'>
           <div className='bg-gray-300 text-[2rem]'>Image placeholder</div>
@@ -148,12 +155,8 @@ function App() {
         </div>
       </div>
       <Modal size='full' isOpen={isOpen} onClose={onClose}>
-        <ModalContent>
-          {() => (
-            <>
-              <ModalBody>{renderActiveChart()}</ModalBody>
-            </>
-          )}
+        <ModalContent className='bg-background p-8'>
+          {() => <ModalBody>{renderActiveChart()}</ModalBody>}
         </ModalContent>
       </Modal>
     </BaseLayout>
