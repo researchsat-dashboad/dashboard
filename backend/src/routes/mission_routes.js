@@ -17,7 +17,7 @@ router.get('/data', async (request, response) => {
     const latestSensorData = sensorData.reverse();
     response.json(latestSensorData);
   } catch (err) {
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-console
     console.error('Error fetching data', err);
     response.status(500).json({ message: 'Internal server error' });
   }
@@ -30,7 +30,7 @@ router.get('/data/temperature', async (request, response) => {
     const sensorData = await SensorData.find({}, ['temperature', 'dateTime']).sort({ dateTime: 1 });
     response.json(sensorData);
   } catch (err) {
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-console
     console.error('Error fetching data', err);
     response.status(500).json({ message: 'Internal server error' });
   }
@@ -43,7 +43,7 @@ router.get('/data/humidity', async (request, response) => {
     const sensorData = await SensorData.find({}, ['humidity', 'dateTime']).sort({ dateTime: 1 });
     response.json(sensorData);
   } catch (err) {
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-console
     console.error('Error fetching data', err);
     response.status(500).json({ message: 'Internal server error' });
   }
@@ -64,7 +64,7 @@ router.get('/data/spect', async (request, response) => {
     ]).sort({ dateTime: 1 });
     response.json(sensorData);
   } catch (err) {
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-console
     console.error('Error fetching data', err);
     response.status(500).json({ message: 'Internal server error' });
   }
@@ -77,6 +77,7 @@ router.get('/data/pressure', async (request, response) => {
     const sensorData = await SensorData.find({}, ['pressure', 'dateTime']).sort({ dateTime: 1 });
     response.json(sensorData);
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error('Error fetching data', err);
     response.status(500).json({ message: 'Internal server error' });
   }
