@@ -6,8 +6,10 @@ export default function Header({ isLive, toggleLive, spectData }) {
 
   useEffect(() => {
     if (spectData?.length > 0) {
-      const latestDataPoint = new Date(spectData[spectData.length - 1].dateTime)
-      const adelaideTime = latestDataPoint.toLocaleString('en-AU', { timeZone: 'Australia/Melbourne' })
+      const latestDataPoint = new Date(spectData[spectData.length - 1].dateTime);
+      const adelaideTime = latestDataPoint.toLocaleString('en-AU', {
+        timeZone: 'Australia/Melbourne'
+      });
       setTime(adelaideTime);
     }
   }, [spectData]);
