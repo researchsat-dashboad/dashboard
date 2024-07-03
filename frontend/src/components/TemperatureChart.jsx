@@ -63,7 +63,7 @@ export default function TemperatureChart({ tempData, handleChartClick }) {
               tick={{ dy: 15, fill: 'white', fontSize: 12 }}
               interval={Math.ceil(data.length / 5)}
             />
-            <YAxis dataKey='temperature' tick={{ fill: 'white', dy: -5, dx: -10, fontSize: 12 }}>
+            <YAxis dataKey='temperature' tick={{ fill: 'white', dx: -10, fontSize: 12 }}>
               <Label value={'Temperature (°C)'} angle={-90} fill='white' dx={-45} />
             </YAxis>
             <Tooltip content={<CustomTooltip />} />

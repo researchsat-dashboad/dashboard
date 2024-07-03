@@ -88,8 +88,8 @@ export default function PressureChartFull({ pressureData }) {
           />
           <YAxis
             dataKey='pressure'
-            tick={{ fill: 'white', dy: -5, dx: -5, fontSize: 16 }}
-            angle={-15}
+            tick={{ fill: 'white', fontSize: 16 }}
+            angle={0}
             domain={[minPressure, 'auto']}
           >
             <Label value={'Pressure (Pa)'} angle={-90} fill='white' dx={-45} />

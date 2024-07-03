@@ -68,7 +68,7 @@ export default function SpectChart({ spectData, handleChartClick }) {
               tick={{ dy: 15, fill: 'white', fontSize: 12 }}
               interval={Math.ceil(data.length / 10)}
             />
-            <YAxis tick={{ fill: 'white', dy: -5, dx: -10, fontSize: 12 }} angle={-45} />
+            <YAxis tick={{ fill: 'white', dx: -10, fontSize: 12 }} angle={0} />
             <Tooltip content={CustomTooltip} />
             <Legend
               verticalAlign='bottom'
