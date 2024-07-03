@@ -60,11 +60,15 @@ export default function HumidityChart({ humidityData, handleChartClick }) {
             <XAxis
               dataKey='dateTime'
               tickFormatter={formatDateTick}
-              tick={{ dy: 10, fill: 'gray' }}
+              tick={{ dy: 15, fill: 'white', fontSize: 12 }}
               interval={Math.ceil(data.length / 5)}
             />
-            <YAxis dataKey='humidity' tick={{ fill: 'gray' }} angle={-45}>
-              <Label value={'Humidity (%)'} angle={-90} fill='white' dx={-15} />
+            <YAxis
+              dataKey='humidity'
+              tick={{ fill: 'white', dy: -5, dx: -10, fontSize: 12 }}
+              angle={-25}
+            >
+              <Label value={'Humidity (%)'} angle={-90} fill='white' dx={-45} />
             </YAxis>
             <Tooltip content={CustomTooltip} />
             {/* <Legend /> */}

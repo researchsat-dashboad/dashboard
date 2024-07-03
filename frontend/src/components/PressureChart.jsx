@@ -68,16 +68,16 @@ export default function PressureChart({ pressureData, dataPoints, handleChartCli
             <XAxis
               dataKey='dateTime'
               tickFormatter={formatDateTick}
-              tick={{ dy: 15, fill: 'gray' }}
+              tick={{ dy: 15, fill: 'white', fontSize: 12 }}
               interval={Math.ceil(data.length / 5)}
             />
             <YAxis
               dataKey='pressure'
-              tick={{ fill: 'gray', dy: -12 }}
-              angle={-45}
+              tick={{ fill: 'white', dy: -5, dx: -10, fontSize: 12 }}
+              angle={-25}
               domain={[minPressure, 'auto']}
             >
-              <Label value={'Pressure (Pa)'} angle={-90} fill='white' dx={-30} />
+              <Label value={'Pressure (Pa)'} angle={-90} fill='white' dx={-45} />
             </YAxis>
             <Tooltip content={CustomTooltip} />
             {/* <Legend /> */}
