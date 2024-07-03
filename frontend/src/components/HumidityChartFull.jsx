@@ -84,8 +84,14 @@ export default function HumidityChartFull({ humidityData }) {
             tickFormatter={formatDateTick}
             tick={{ dy: 15, fill: 'white', fontSize: 16 }}
             interval={Math.ceil(data.length / 100)}
+            stroke='white'
           />
-          <YAxis dataKey='humidity' tick={{ fill: 'white', dx: -15, fontSize: 16 }} angle={0}>
+          <YAxis
+            dataKey='humidity'
+            tick={{ fill: 'white', dx: -15, fontSize: 16 }}
+            angle={0}
+            stroke='white'
+          >
             <Label value={'Humidity (%)'} angle={-90} fill='white' dx={-45} />
           </YAxis>
           <Tooltip content={CustomTooltip} />

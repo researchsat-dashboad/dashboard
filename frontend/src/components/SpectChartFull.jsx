@@ -115,8 +115,9 @@ export default function SpectChartFull({ spectData }) {
             tickFormatter={formatDateTick}
             tick={{ dy: 15, fill: 'white', fontSize: 12 }}
             interval={Math.ceil(data.length / 100)}
+            stroke='white'
           />
-          <YAxis tick={{ fill: 'white', dx: -10, fontSize: 16 }} angle={0}>
+          <YAxis tick={{ fill: 'white', dx: -10, fontSize: 16 }} angle={0} stroke='white'>
             <Label value={'Spectral Value'} angle={-90} fill='white' dx={-45} />
           </YAxis>
           <Tooltip content={CustomTooltip} />

@@ -85,12 +85,14 @@ export default function PressureChartFull({ pressureData }) {
             tickFormatter={formatDateTick}
             tick={{ dy: 15, fill: 'white', fontSize: 16 }}
             interval={Math.ceil(data.length / 100)}
+            stroke='white'
           />
           <YAxis
             dataKey='pressure'
             tick={{ fill: 'white', fontSize: 16 }}
             angle={0}
             domain={[minPressure, 'auto']}
+            stroke='white'
           >
             <Label value={'Pressure (Pa)'} angle={-90} fill='white' dx={-45} />
           </YAxis>
