@@ -87,7 +87,9 @@ router.get('/data/pressure', async (request, response) => {
 router.get('/data/acceleration', async (request, response) => {
   try {
     // Retrieve pressure data points in ascending order
-    const sensorData = await SensorData.find({}, ['acx', 'acy', 'acz', 'signal', 'dateTime']).sort({ dateTime: 1 });
+    const sensorData = await SensorData.find({}, ['acx', 'acy', 'acz', 'signal', 'dateTime']).sort({
+      dateTime: 1
+    });
     response.json(sensorData);
   } catch (err) {
     // eslint-disable-next-line no-console
