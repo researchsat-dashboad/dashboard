@@ -1,14 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@nextui-org/react';
 import axios from 'axios';
 
-const DataFetcher = ({ setSpectData, setTempData, setHumidityData, setPressureData, setAccelerationData }) => {
+const DataFetcher = ({
+  setSpectData,
+  setTempData,
+  setHumidityData,
+  setPressureData,
+  setAccelerationData
+}) => {
   const [isFetching, setIsFetching] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
 
   const fetchData = async () => {
     try {
-      await axios.get('http://localhost:4001/process-data');
+      await axios.get('http://localhost:4001/process-data', {
+        headers: { 'Content-Type': 'application/json' }
+      });
 
       await new Promise((resolve) => setTimeout(resolve, 5000));
 
@@ -20,17 +28,17 @@ const DataFetcher = ({ setSpectData, setTempData, setHumidityData, setPressureDa
         dateTime: entry.dateTime,
         temperature: entry.temperature
       }));
-  
+
       const humidityArr = data.map((entry) => ({
         dateTime: entry.dateTime,
         humidity: entry.humidity
       }));
-  
+
       const pressureArr = data.map((entry) => ({
         dateTime: entry.dateTime,
         pressure: entry.pressure
       }));
-  
+
       const spectArr = data.map((entry) => ({
         dateTime: entry.dateTime,
         spectV: entry.spectV,
@@ -40,20 +48,19 @@ const DataFetcher = ({ setSpectData, setTempData, setHumidityData, setPressureDa
         spectD: entry.spectD,
         spectR: entry.spectR
       }));
-  
+
       const accelerationArr = data.map((entry) => ({
         dateTime: entry.dateTime,
         acx: entry.acx,
         acy: entry.acy,
         acz: entry.acz
       }));
-  
+
       setTempData(temperatureArr);
       setHumidityData(humidityArr);
       setPressureData(pressureArr);
       setSpectData(spectArr);
       setAccelerationData(accelerationArr);
-
     } catch (error) {
       console.error('Error fetching data:', error);
     }
