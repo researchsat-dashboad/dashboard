@@ -18,8 +18,6 @@ const DataFetcher = ({
         headers: { 'Content-Type': 'application/json' }
       });
 
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-
       const response = await fetch('http://localhost:4001/mission/data?limit=50');
 
       const data = await response.json();
@@ -53,7 +51,8 @@ const DataFetcher = ({
         dateTime: entry.dateTime,
         acx: entry.acx,
         acy: entry.acy,
-        acz: entry.acz
+        acz: entry.acz,
+        signal: entry.signal
       }));
 
       setTempData(temperatureArr);
@@ -62,6 +61,7 @@ const DataFetcher = ({
       setSpectData(spectArr);
       setAccelerationData(accelerationArr);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error fetching data:', error);
     }
   };

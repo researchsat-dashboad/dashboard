@@ -8,8 +8,8 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
-import formatDateTick from '../services/formatDateTick';
-import Loader from '../services/Loader';
+import formatDateTick from '../../services/formatDateTick';
+import Loader from '../../services/Loader';
 import ChartContainer from './ChartContainer';
 
 export default function SpectChart({ spectData, handleChartClick }) {

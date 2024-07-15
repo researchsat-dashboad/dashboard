@@ -5,41 +5,54 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  Legend,
   Label,
   ResponsiveContainer
 } from 'recharts';
-import formatDateTick from '../services/formatDateTick';
+import formatDateTick from '../../services/formatDateTick';
 import ChartContainer from './ChartContainer';
 
 const calculateMovingAverage = (data, windowSize) => {
   const movingAverageData = [];
 
-  for (let i = 0; i < data.length; i += 20) {
-    let sum = 0;
+  for (let i = 0; i < data.length; i += 5) {
+    let acxSum = 0;
+    let acySum = 0;
+    let aczSum = 0;
     let count = 0;
 
     for (let j = Math.max(0, i - windowSize + 1); j <= i; j++) {
-      sum += data[j].pressure;
+      acxSum += data[j].acx;
+      acySum += data[j].acy;
+      aczSum += data[j].acz;
       count++;
     }
 
-    const average = sum / count;
-    movingAverageData.push({ dateTime: data[i].dateTime, pressure: average });
+    const acxAverage = acxSum / count;
+    const acyAverage = acySum / count;
+    const aczAverage = aczSum / count;
+
+    movingAverageData.push({
+      dateTime: data[i].dateTime,
+      acx: acxAverage,
+      acy: acyAverage,
+      acz: aczAverage
+    });
   }
 
   return movingAverageData;
 };
 
-export default function PressureChartFull({ pressureData }) {
-  if (!pressureData) {
+export default function AccelerationChartFull({ accelerationData }) {
+  // console.log(spectData);
+  if (!accelerationData) {
     // Loading placeholder so things don't break
     return <div>Loading</div>;
   }
 
-  const data = pressureData;
+  const data = accelerationData;
 
-  const movingAverageData = calculateMovingAverage(pressureData, 100);
-  const minPressure = Math.min(...movingAverageData.map((entry) => entry.pressure));
+  const movingAverageData = calculateMovingAverage(accelerationData, 50);
 
   // Custom tooltip formatter (for better formatting)
   const CustomTooltip = ({ active, payload, label }) => {
@@ -62,7 +75,9 @@ export default function PressureChartFull({ pressureData }) {
           }}
         >
           <p className='label'>{`Time: ${time}`}</p>
-          <p className='data'>{`Pressure: ${payload[0].value.toLocaleString()} Pa`}</p>
+          <p className='data'>{`X: ${payload[0].value.toFixed(2)}`}</p>
+          <p className='data'>{`Y: ${payload[1].value.toFixed(2)}`}</p>
+          <p className='data'>{`Z: ${payload[2].value.toFixed(2)}`}</p>
         </div>
       );
     }
@@ -71,7 +86,7 @@ export default function PressureChartFull({ pressureData }) {
   };
 
   return (
-    <ChartContainer title='Pressure/Time'>
+    <ChartContainer title='Acceleration/Time'>
       <ResponsiveContainer width='100%' height='95%'>
         <LineChart
           width={730}
@@ -83,22 +98,22 @@ export default function PressureChartFull({ pressureData }) {
           <XAxis
             dataKey='dateTime'
             tickFormatter={formatDateTick}
-            tick={{ dy: 15, fill: 'white', fontSize: 16 }}
+            tick={{ dy: 15, fill: 'white', fontSize: 12 }}
             interval={Math.ceil(data.length / 100)}
             stroke='white'
           />
-          <YAxis
-            dataKey='pressure'
-            tick={{ fill: 'white', fontSize: 16 }}
-            angle={0}
-            domain={[minPressure, 'auto']}
-            stroke='white'
-          >
-            <Label value={'Pressure (Pa)'} angle={-90} fill='white' dx={-45} />
+          <YAxis tick={{ fill: 'white', dx: -10, fontSize: 16 }} angle={0} stroke='white'>
+            <Label value={'Acceleration'} angle={-90} fill='white' dx={-30} />
           </YAxis>
           <Tooltip content={CustomTooltip} />
-          {/* <Legend /> */}
-          <Line type='monotone' dataKey='pressure' stroke='#fff' dot={false} />
+          <Legend
+            verticalAlign='bottom'
+            align='center'
+            wrapperStyle={{ paddingTop: '40px' }} // Add padding to separate the legend from the chart
+          />
+          <Line type='monotone' dataKey='acx' name='X-axis' stroke='#FFFF00' dot={false} />
+          <Line type='monotone' dataKey='acy' name='Y-axis' stroke='#fc0f03' dot={false} />
+          <Line type='monotone' dataKey='acz' name='Z-axis' stroke='#c603fc' dot={false} />
         </LineChart>
       </ResponsiveContainer>
     </ChartContainer>
