@@ -2,6 +2,7 @@ import { Navbar, NavbarContent, Image } from '@nextui-org/react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import DataFetcher from '../services/DataFetcher';
+import { Link } from 'react-router-dom';
 
 export default function Header({
   spectData,
