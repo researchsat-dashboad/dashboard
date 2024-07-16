@@ -14,6 +14,7 @@ router.get('/data', async (request, response) => {
   try {
     // Retrieve all data points in descending order
     const sensorData = await SensorData.find().sort({ dateTime: -1 }).limit(limit);
+
     const latestSensorData = sensorData.reverse();
     response.json(latestSensorData);
   } catch (err) {
@@ -87,7 +88,9 @@ router.get('/data/pressure', async (request, response) => {
 router.get('/data/acceleration', async (request, response) => {
   try {
     // Retrieve pressure data points in ascending order
-    const sensorData = await SensorData.find({}, ['acx', 'acy', 'acz', 'signal', 'dateTime']).sort({ dateTime: 1 });
+    const sensorData = await SensorData.find({}, ['acx', 'acy', 'acz', 'signal', 'dateTime']).sort({
+      dateTime: 1
+    });
     response.json(sensorData);
   } catch (err) {
     // eslint-disable-next-line no-console

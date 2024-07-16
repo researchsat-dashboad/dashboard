@@ -8,37 +8,39 @@ import {
   Label,
   ResponsiveContainer
 } from 'recharts';
-import formatDateTick from '../services/formatDateTick';
+import formatDateTick from '../../services/formatDateTick';
+import formatPressureUnit from '../../services/formatPressureUnit';
 import ChartContainer from './ChartContainer';
 
 const calculateMovingAverage = (data, windowSize) => {
   const movingAverageData = [];
 
-  for (let i = 0; i < data.length; i += 10) {
+  for (let i = 0; i < data.length; i += 5) {
     let sum = 0;
     let count = 0;
 
     for (let j = Math.max(0, i - windowSize + 1); j <= i; j++) {
-      sum += data[j].humidity;
+      sum += data[j].pressure;
       count++;
     }
 
     const average = sum / count;
-    movingAverageData.push({ dateTime: data[i].dateTime, humidity: average });
+    movingAverageData.push({ dateTime: data[i].dateTime, pressure: average });
   }
 
   return movingAverageData;
 };
 
-export default function HumidityChartFull({ humidityData }) {
-  if (!humidityData) {
+export default function PressureChartFull({ pressureData }) {
+  if (!pressureData) {
     // Loading placeholder so things don't break
     return <div>Loading</div>;
   }
 
-  const data = humidityData;
+  const data = pressureData;
 
-  const movingAverageData = calculateMovingAverage(humidityData, 10);
+  const movingAverageData = calculateMovingAverage(pressureData, 10);
+  const minPressure = Math.min(...movingAverageData.map((entry) => entry.pressure));
 
   // Custom tooltip formatter (for better formatting)
   const CustomTooltip = ({ active, payload, label }) => {
@@ -61,7 +63,7 @@ export default function HumidityChartFull({ humidityData }) {
           }}
         >
           <p className='label'>{`Time: ${time}`}</p>
-          <p className='data'>{`Humidity: ${payload[0].value.toFixed(2).toLocaleString()} %`}</p>
+          <p className='data'>{`Pressure: ${payload[0].value.toLocaleString()} Pa`}</p>
         </div>
       );
     }
@@ -70,7 +72,7 @@ export default function HumidityChartFull({ humidityData }) {
   };
 
   return (
-    <ChartContainer title='Humidity/Time'>
+    <ChartContainer title='Pressure/Time'>
       <ResponsiveContainer width='100%' height='95%'>
         <LineChart
           width={730}
@@ -87,16 +89,18 @@ export default function HumidityChartFull({ humidityData }) {
             stroke='white'
           />
           <YAxis
-            dataKey='humidity'
-            tick={{ fill: 'white', dx: -15, fontSize: 16 }}
+            dataKey='pressure'
+            tick={{ fill: 'white', fontSize: 16 }}
             angle={0}
+            domain={[minPressure, 'auto']}
             stroke='white'
+            tickFormatter={formatPressureUnit}
           >
-            <Label value={'Humidity (%)'} angle={-90} fill='white' dx={-45} />
+            <Label value={'Pressure (Kpa)'} angle={-90} fill='white' dx={-45} />
           </YAxis>
           <Tooltip content={CustomTooltip} />
           {/* <Legend /> */}
-          <Line type='monotone' dataKey='humidity' stroke='#fff' dot={false} />
+          <Line type='monotone' dataKey='pressure' stroke='#fff' dot={false} />
         </LineChart>
       </ResponsiveContainer>
     </ChartContainer>

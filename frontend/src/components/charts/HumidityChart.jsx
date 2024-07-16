@@ -8,14 +8,12 @@ import {
   Label,
   ResponsiveContainer
 } from 'recharts';
-import formatDateTick from '../services/formatDateTick';
-import Loader from '../services/Loader';
+import formatDateTick from '../../services/formatDateTick';
+import Loader from '../../services/Loader';
 import ChartContainer from './ChartContainer';
 
-export default function PressureChart({ pressureData, handleChartClick }) {
-  const data = pressureData.slice(-50);
-
-  const minPressure = Math.min(...data.map((entry) => entry.pressure));
+export default function HumidityChart({ humidityData, handleChartClick }) {
+  const data = humidityData.slice(-50);
 
   // Custom tooltip formatter (optional, for better formatting)
   const CustomTooltip = ({ active, payload, label }) => {
@@ -38,7 +36,7 @@ export default function PressureChart({ pressureData, handleChartClick }) {
           }}
         >
           <p className='label'>{`Time: ${time}`}</p>
-          <p className='data'>{`Pressure: ${payload[0].value.toLocaleString()} Pa`}</p>
+          <p className='data'>{`Humidity: ${payload[0].value.toFixed(2)}%`}</p>
         </div>
       );
     }
@@ -47,8 +45,8 @@ export default function PressureChart({ pressureData, handleChartClick }) {
   };
 
   return (
-    <ChartContainer title='Pressure/Time' onZoom={handleChartClick('pressure')}>
-      {pressureData.length == 0 ? (
+    <ChartContainer onZoom={handleChartClick('humidity')} title='Humidity/Time'>
+      {humidityData.length == 0 ? (
         <Loader />
       ) : (
         <ResponsiveContainer width='100%' height='100%'>
@@ -56,7 +54,7 @@ export default function PressureChart({ pressureData, handleChartClick }) {
             width={730}
             height={250}
             data={data}
-            margin={{ top: 15, right: 30, left: 20, bottom: 30 }}
+            margin={{ top: 5, right: 30, left: 20, bottom: 30 }}
           >
             <CartesianGrid strokeDasharray='3 3' stroke='#5d5e5e' />
             <XAxis
@@ -67,16 +65,16 @@ export default function PressureChart({ pressureData, handleChartClick }) {
               stroke='white'
             />
             <YAxis
-              dataKey='pressure'
-              tick={{ fill: 'white', dx: -5, fontSize: 12 }}
+              dataKey='humidity'
+              tick={{ fill: 'white', dx: -10, fontSize: 12 }}
               angle={0}
-              domain={[minPressure, 'auto']}
               stroke='white'
             >
-              <Label value={'Pressure (Pa)'} angle={-90} fill='white' dx={-45} />
+              <Label value={'Humidity (%)'} angle={-90} fill='white' dx={-45} />
             </YAxis>
             <Tooltip content={CustomTooltip} />
-            <Line type='monotone' dataKey='pressure' stroke='#fff' dot={false} />
+            {/* <Legend /> */}
+            <Line type='monotone' dataKey='humidity' stroke='#fff' dot={false} />
           </LineChart>
         </ResponsiveContainer>
       )}

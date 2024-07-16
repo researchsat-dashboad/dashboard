@@ -8,7 +8,7 @@ import {
   Label,
   ResponsiveContainer
 } from 'recharts';
-import formatDateTick from '../services/formatDateTick';
+import formatDateTick from '../../services/formatDateTick';
 import ChartContainer from './ChartContainer';
 
 const calculateMovingAverage = (data, windowSize) => {
@@ -19,26 +19,26 @@ const calculateMovingAverage = (data, windowSize) => {
     let count = 0;
 
     for (let j = Math.max(0, i - windowSize + 1); j <= i; j++) {
-      sum += data[j].temperature;
+      sum += data[j].humidity;
       count++;
     }
 
     const average = sum / count;
-    movingAverageData.push({ dateTime: data[i].dateTime, temperature: average });
+    movingAverageData.push({ dateTime: data[i].dateTime, humidity: average });
   }
 
   return movingAverageData;
 };
 
-export default function TemperatureChartFull({ temperatureData }) {
-  if (!temperatureData) {
+export default function HumidityChartFull({ humidityData }) {
+  if (!humidityData) {
     // Loading placeholder so things don't break
     return <div>Loading</div>;
   }
 
-  const data = temperatureData;
+  const data = humidityData;
 
-  const movingAverageData = calculateMovingAverage(temperatureData, 50);
+  const movingAverageData = calculateMovingAverage(humidityData, 10);
 
   // Custom tooltip formatter (for better formatting)
   const CustomTooltip = ({ active, payload, label }) => {
@@ -61,7 +61,7 @@ export default function TemperatureChartFull({ temperatureData }) {
           }}
         >
           <p className='label'>{`Time: ${time}`}</p>
-          <p className='data'>{`Temperature: ${payload[0].value.toFixed(2)}°C`}</p>
+          <p className='data'>{`Humidity: ${payload[0].value.toFixed(2).toLocaleString()} %`}</p>
         </div>
       );
     }
@@ -70,7 +70,7 @@ export default function TemperatureChartFull({ temperatureData }) {
   };
 
   return (
-    <ChartContainer title='Temperature/Time'>
+    <ChartContainer title='Humidity/Time'>
       <ResponsiveContainer width='100%' height='95%'>
         <LineChart
           width={730}
@@ -82,21 +82,21 @@ export default function TemperatureChartFull({ temperatureData }) {
           <XAxis
             dataKey='dateTime'
             tickFormatter={formatDateTick}
-            tick={{ dy: 15, fill: 'white', fontSize: 12 }}
+            tick={{ dy: 15, fill: 'white', fontSize: 16 }}
             interval={Math.ceil(data.length / 100)}
             stroke='white'
           />
           <YAxis
-            dataKey='temperature'
-            tick={{ fill: 'white', dx: -5, fontSize: 16 }}
+            dataKey='humidity'
+            tick={{ fill: 'white', dx: -15, fontSize: 16 }}
             angle={0}
             stroke='white'
           >
-            <Label value={'Temperature (°C)'} angle={-90} fill='white' dx={-40} />
+            <Label value={'Humidity (%)'} angle={-90} fill='white' dx={-45} />
           </YAxis>
           <Tooltip content={CustomTooltip} />
           {/* <Legend /> */}
-          <Line type='monotone' dataKey='temperature' stroke='#fff' dot={false} />
+          <Line type='monotone' dataKey='humidity' stroke='#fff' dot={false} />
         </LineChart>
       </ResponsiveContainer>
     </ChartContainer>

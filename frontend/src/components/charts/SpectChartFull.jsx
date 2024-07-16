@@ -9,7 +9,7 @@ import {
   Label,
   ResponsiveContainer
 } from 'recharts';
-import formatDateTick from '../services/formatDateTick';
+import formatDateTick from '../../services/formatDateTick';
 import ChartContainer from './ChartContainer';
 
 const calculateMovingAverage = (data, windowSize) => {

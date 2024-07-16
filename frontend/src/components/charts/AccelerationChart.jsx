@@ -6,15 +6,13 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer,
-  ReferenceArea
+  ResponsiveContainer
 } from 'recharts';
-import formatDateTick from '../services/formatDateTick';
-import Loader from '../services/Loader';
+import formatDateTick from '../../services/formatDateTick';
+import Loader from '../../services/Loader';
 import ChartContainer from './ChartContainer';
 
-export default function AccelerationChart({ accelerationData, handleChartClick, flightStage }) {
-
+export default function AccelerationChart({ accelerationData, handleChartClick }) {
   const data = accelerationData.slice(-50);
 
   // Custom tooltip formatter (optional, for better formatting)
@@ -60,7 +58,7 @@ export default function AccelerationChart({ accelerationData, handleChartClick, 
             data={data}
             margin={{ top: 20, right: 30, bottom: 15 }}
           >
-            <CartesianGrid strokeDasharray='3 3' stroke='#5d5e5e' fill={flightStage.colour}/>
+            <CartesianGrid strokeDasharray='3 3' stroke='#5d5e5e' />
             <XAxis
               dataKey='dateTime'
               tickFormatter={formatDateTick}

@@ -8,12 +8,15 @@ import {
   Label,
   ResponsiveContainer
 } from 'recharts';
-import formatDateTick from '../services/formatDateTick';
-import Loader from '../services/Loader';
+import formatDateTick from '../../services/formatDateTick';
+import formatPressureUnit from '../../services/formatPressureUnit';
+import Loader from '../../services/Loader';
 import ChartContainer from './ChartContainer';
 
-export default function TemperatureChart({ tempData, handleChartClick }) {
-  const data = tempData.slice(-50);
+export default function PressureChart({ pressureData, handleChartClick }) {
+  const data = pressureData.slice(-50);
+
+  const minPressure = Math.min(...data.map((entry) => entry.pressure));
 
   // Custom tooltip formatter (optional, for better formatting)
   const CustomTooltip = ({ active, payload, label }) => {
@@ -36,7 +39,7 @@ export default function TemperatureChart({ tempData, handleChartClick }) {
           }}
         >
           <p className='label'>{`Time: ${time}`}</p>
-          <p className='data'>{`Temperature: ${payload[0].value.toFixed(2)}°C`}</p>
+          <p className='data'>{`Pressure: ${payload[0].value.toLocaleString()} Pa`}</p>
         </div>
       );
     }
@@ -45,16 +48,16 @@ export default function TemperatureChart({ tempData, handleChartClick }) {
   };
 
   return (
-    <ChartContainer title='Temperature/Time' onZoom={handleChartClick('temperature')}>
-      {tempData.length == 0 ? (
+    <ChartContainer title='Pressure/Time' onZoom={handleChartClick('pressure')}>
+      {pressureData.length == 0 ? (
         <Loader />
       ) : (
-        <ResponsiveContainer width='100%' height='90%'>
+        <ResponsiveContainer width='100%' height='100%'>
           <LineChart
             width={730}
             height={250}
             data={data}
-            margin={{ top: 5, right: 30, left: 20, bottom: 10 }}
+            margin={{ top: 15, right: 30, left: 20, bottom: 30 }}
           >
             <CartesianGrid strokeDasharray='3 3' stroke='#5d5e5e' />
             <XAxis
@@ -65,15 +68,17 @@ export default function TemperatureChart({ tempData, handleChartClick }) {
               stroke='white'
             />
             <YAxis
-              dataKey='temperature'
-              tick={{ fill: 'white', dx: -10, fontSize: 12 }}
+              dataKey='pressure'
+              tick={{ fill: 'white', dx: -5, fontSize: 12 }}
+              angle={0}
+              domain={[minPressure, 'auto']}
               stroke='white'
+              tickFormatter={formatPressureUnit}
             >
-              <Label value={'Temperature (°C)'} angle={-90} fill='white' dx={-45} />
+              <Label value={'Pressure (Kpa)'} angle={-90} fill='white' dx={-45} />
             </YAxis>
-            <Tooltip content={<CustomTooltip />} />
-            {/* <Legend /> */}
-            <Line type='monotone' dataKey='temperature' stroke='#fff' dot={false} />
+            <Tooltip content={CustomTooltip} />
+            <Line type='monotone' dataKey='pressure' stroke='#fff' dot={false} />
           </LineChart>
         </ResponsiveContainer>
       )}
