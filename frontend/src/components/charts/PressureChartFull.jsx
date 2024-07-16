@@ -9,6 +9,7 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import formatDateTick from '../../services/formatDateTick';
+import formatPressureUnit from '../../services/formatPressureUnit';
 import ChartContainer from './ChartContainer';
 
 const calculateMovingAverage = (data, windowSize) => {
@@ -93,8 +94,9 @@ export default function PressureChartFull({ pressureData }) {
             angle={0}
             domain={[minPressure, 'auto']}
             stroke='white'
+            tickFormatter={formatPressureUnit}
           >
-            <Label value={'Pressure (Pa)'} angle={-90} fill='white' dx={-45} />
+            <Label value={'Pressure (Kpa)'} angle={-90} fill='white' dx={-45} />
           </YAxis>
           <Tooltip content={CustomTooltip} />
           {/* <Legend /> */}

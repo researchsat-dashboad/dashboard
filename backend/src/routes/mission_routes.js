@@ -14,6 +14,7 @@ router.get('/data', async (request, response) => {
   try {
     // Retrieve all data points in descending order
     const sensorData = await SensorData.find().sort({ dateTime: -1 }).limit(limit);
+
     const latestSensorData = sensorData.reverse();
     response.json(latestSensorData);
   } catch (err) {

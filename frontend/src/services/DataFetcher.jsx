@@ -18,7 +18,9 @@ const DataFetcher = ({
         headers: { 'Content-Type': 'application/json' }
       });
 
-      const response = await fetch('http://localhost:4001/mission/data?limit=50');
+      const response = await fetch('http://localhost:4001/mission/data?limit=50', {
+        headers: { 'Content-Type': 'application/json' }
+      });
 
       const data = await response.json();
 

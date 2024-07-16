@@ -9,6 +9,7 @@ import {
   ResponsiveContainer
 } from 'recharts';
 import formatDateTick from '../../services/formatDateTick';
+import formatPressureUnit from '../../services/formatPressureUnit';
 import Loader from '../../services/Loader';
 import ChartContainer from './ChartContainer';
 
@@ -72,8 +73,9 @@ export default function PressureChart({ pressureData, handleChartClick }) {
               angle={0}
               domain={[minPressure, 'auto']}
               stroke='white'
+              tickFormatter={formatPressureUnit}
             >
-              <Label value={'Pressure (Pa)'} angle={-90} fill='white' dx={-45} />
+              <Label value={'Pressure (Kpa)'} angle={-90} fill='white' dx={-45} />
             </YAxis>
             <Tooltip content={CustomTooltip} />
             <Line type='monotone' dataKey='pressure' stroke='#fff' dot={false} />
